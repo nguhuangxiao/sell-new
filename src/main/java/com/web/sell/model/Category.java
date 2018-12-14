@@ -10,6 +10,8 @@ public class Category {
 
     private Long gid;
 
+    private Long sellerId;
+
     private String categoryName;
 
     private Integer categoryType;

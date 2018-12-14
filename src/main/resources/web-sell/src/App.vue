@@ -31,10 +31,9 @@
     created() {
           const url = config.BASE_URL +'/seller/detail'
           this.$http.get(url + '?id=1').then((response) => {
-            response = response.body;
-            if (response.code === 0) {
-              this.seller = Object.assign({}, this.seller, response.data);
-            }
+            var result = response.body;
+            console.log(result.result)
+            this.seller = Object.assign({}, this.seller, result.result);
         });
     }
   };

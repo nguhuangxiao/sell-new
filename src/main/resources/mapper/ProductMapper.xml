@@ -3,6 +3,7 @@
 <mapper namespace="com.web.sell.mapper.ProductMapper" >
   <resultMap id="BaseResultMap" type="com.web.sell.model.Product" >
     <id column="gid" property="gid" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="stock" property="stock" jdbcType="INTEGER" />
@@ -14,7 +15,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    gid, name, price, stock, description, icon, status, category_type, create_time, update_time
+    gid, seller_id, name, price, stock, description, icon, status, category_type, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -154,7 +155,7 @@
     select 
     <include refid="Base_Column_List" />
     from tb_product
-    where gid = #{gid,jdbcType=BIGINT} and status = #{productStatus,jdbcType=TINYINT}
+    where seller_id = #{sellerId,jdbcType=BIGINT} and status = #{status,jdbcType=TINYINT}
   </select>
 
 </mapper>

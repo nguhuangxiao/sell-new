@@ -3,13 +3,14 @@
 <mapper namespace="com.web.sell.mapper.CategoryMapper" >
   <resultMap id="BaseResultMap" type="com.web.sell.model.Category" >
     <id column="gid" property="gid" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
     <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
     <result column="category_type" property="categoryType" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    gid, category_name, category_type, create_time, update_time
+    gid, seller_id, category_name, category_type, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -91,10 +92,16 @@
     where gid = #{gid,jdbcType=BIGINT}
   </update>
 
-  <select id="findAll" resultMap="BaseResultMap">
+  <select id="findCategoryByType" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tb_category
+    where seller_id=#{sellerId, jdbcType=BIGINT}
+    and category_type in
+    <foreach item="item" index="index" collection="type"
+             open="(" separator="," close=")">
+      #{item}
+    </foreach>
   </select>
 
 </mapper>

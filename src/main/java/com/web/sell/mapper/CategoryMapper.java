@@ -2,6 +2,7 @@ package com.web.sell.mapper;
 
 import com.web.sell.model.Category;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface CategoryMapper {
@@ -18,6 +19,6 @@ public interface CategoryMapper {
 
     int updateByPrimaryKey(Category record);
 
-    List<Category> findAll();
+    List<Category> findCategoryByType(HashMap<String, Object> condition);
 
 }

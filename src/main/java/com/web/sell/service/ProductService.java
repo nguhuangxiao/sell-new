@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProductService {
 
     /** 查询在架商品 **/
-    List<Product> findUpAll(Long gid);
+    List<Product> findUpAll(Long sellerId);
 
     /** 增加库存 **/
     void addStock(StockDto stockDto);

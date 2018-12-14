@@ -20,11 +20,11 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
 
     @Override
-    public List<Product> findUpAll(Long gid) {
+    public List<Product> findUpAll(Long sellerId) {
 
         HashMap<String, Object> condition = new HashMap<>(2);
-        condition.put("gid", gid);
-        condition.put("productStatus", ProductStatus.UP);
+        condition.put("sellerId", sellerId);
+        condition.put("status", ProductStatus.UP);
         return productMapper.selectByStatusUp(condition);
 
     }

@@ -10,6 +10,8 @@ public class Product {
 
     private Long gid;
 
+    private Long sellerId;
+
     private String name;
 
     private BigDecimal price;

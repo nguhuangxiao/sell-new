@@ -91,6 +91,7 @@
           },
           selectFoods() {
             let foods = [];
+            return
             this.goods.forEach((good) => {
               good.foods.forEach((food) => {
                 if (food.count) {
@@ -101,7 +102,7 @@
             return foods;
           }
         },
-    created() {
+    mounted() {
           this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
           const url = config.BASE_URL +'/product/list'
           this.$http.get(url, {
@@ -109,14 +110,13 @@
                   "id": 1
               }
           }).then((response) => {
-            response = response.body;
-            if (response.code === 0) {
-              this.goods = response.data;
-              this.$nextTick(() => {
-                this._initScroll();
-                this._calculateHeight();
-              });
-            }
+            var result = response.body;
+            this.goods = result.result;
+            console.log(this.goods)
+            this.$nextTick(() => {
+              this._initScroll();
+              this._calculateHeight();
+            });
           });
         },
     methods: {

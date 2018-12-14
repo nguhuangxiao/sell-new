@@ -7,7 +7,12 @@ import java.util.List;
 
 public interface CategoryService {
 
-    /** 商品类型查询 **/
-    List<Category> findAll();
+    /**
+     * 查找商品类型
+     * @param sellerId
+     * @param typeList
+     * @return
+     */
+    List<Category> findCategory(Long sellerId, List<Integer> typeList);
 
 }

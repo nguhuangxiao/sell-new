@@ -1,5 +1,6 @@
 package com.web.sell.controller;
 
+import com.web.sell.dto.ProductDto;
 import com.web.sell.model.Category;
 import com.web.sell.model.Product;
 import com.web.sell.req.ProductReq;
@@ -32,20 +33,38 @@ public class ProductController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Res<?> list(@Valid ProductReq productReq) {
 
-        //List<Category> categoryList = categoryService.findAll(); //查询所有类目
-
+        //查询上架商品
         List<Product> productUpList = productService.findUpAll(productReq.getId());
 
-        List<Integer> categoryList = new ArrayList<>();
-
-        for(int i=0; i<productUpList.size(); i++) {
-
-
-
+        List<Integer> categoryTypeList = new ArrayList<>();
+        for(Product product : productUpList) {
+            categoryTypeList.add(product.getCategoryType());
         }
 
+        //查询所有类目
+        List<Category> categoryList = categoryService.findCategory(productReq.getId(), categoryTypeList);
 
-        return null;
+        //数据拼接
+        List<ProductDto> productDtoList = new ArrayList<>();
+        for(Category category : categoryList){
+
+            ProductDto productDto = new ProductDto();
+            productDto.setName(category.getCategoryName());
+            productDto.setType(category.getCategoryType());
+
+            List<Product> productList = new ArrayList<>();
+            for(Product product : productUpList){
+                Integer type = product.getCategoryType();
+                //判断商品类型相同
+                if(category.getCategoryType().equals(type)){
+                    productList.add(product);
+                }
+            }
+            productDto.setList(productList);
+            productDtoList.add(productDto);
+        }
+
+        return Res.buildOk(productDtoList);
     }
 
 }
