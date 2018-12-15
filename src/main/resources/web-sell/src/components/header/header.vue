@@ -2,7 +2,7 @@
   <div class="header">
     <div class="content-wrapper">
       <div class="avatar">
-        <img width="64" height="64" :src="seller.avatar">
+        <img width="64" height="64" :src="seller.icon">
       </div>
       <div class="content">
         <div class="title">
@@ -84,7 +84,8 @@
           };
         },
     created() {
-      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+        console.log(this.seller)
+        this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
     methods: {
           showDetail() {

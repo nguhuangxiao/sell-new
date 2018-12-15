@@ -21,20 +21,12 @@
     data() {
           return {
             seller: {
-              id: (() => {
-                let queryParam = urlParse();
-                return queryParam.id;
-              })()
+
             }
           };
     },
     created() {
-          const url = config.BASE_URL +'/seller/detail'
-          this.$http.get(url + '?id=1').then((response) => {
-            var result = response.body;
-            console.log(result.result)
-            this.seller = Object.assign({}, this.seller, result.result);
-        });
+
     }
   };
 </script>
