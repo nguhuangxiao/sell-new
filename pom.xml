@@ -57,6 +57,17 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- 角色权限 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+
         <!-- 工具类 -->
         <dependency>
             <groupId>com.alibaba</groupId>
