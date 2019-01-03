@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @ApiModel
 @Data
-public class ProductReq {
+public class ProductReq extends BaseReg {
 
     @ApiModelProperty(value = "商户id", required = true)
     @NotNull

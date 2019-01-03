@@ -1,5 +1,7 @@
 package com.web.sell.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.web.sell.dto.ProductDto;
 import com.web.sell.model.Category;
 import com.web.sell.model.Product;
@@ -64,7 +66,11 @@ public class ProductController {
             productDtoList.add(productDto);
         }
 
-        return Res.buildOk(productDtoList);
+        PageHelper.startPage(productReq.getPageNo(), productReq.getPageSize());
+        //List<>
+        PageInfo<ProductDto> page = new PageInfo<>(productDtoList);
+
+        return Res.buildOk(page);
     }
 
 }

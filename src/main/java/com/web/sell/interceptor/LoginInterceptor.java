@@ -19,7 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         HttpSession session = request.getSession();
 
-        return false;
+        return true;
     }
 
 }
