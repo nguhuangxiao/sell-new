@@ -1,7 +1,7 @@
 <template>
     <div class="login-section">
         <div>
-            用户名：<input name="userName" type="text" v-model="formData.userName"  class="login-input" placeholder="请输入用户名" />
+            用户名：<input name="phone" type="text" v-model="formData.phone"  class="login-input" placeholder="请输入用户名" />
         </div>
         <div>
             密码：<input type="password" class="login-input" v-model="formData.password" maxlength="32" placeholder="请输入密码"/>
@@ -25,7 +25,7 @@
         data() {
             return {
                 formData: {
-                    userName: '',
+                    phone: '',
                     password: ''
                 }
             };
@@ -35,7 +35,7 @@
             login() {
                 const url = config.BASE_URL +'/user/login'
                 this.$http.post(url, {
-                    userName: this.formData.userName,
+                    phone: this.formData.phone,
                     password: this.formData.password
                 }).then((response) => {
                     var result = response.body;

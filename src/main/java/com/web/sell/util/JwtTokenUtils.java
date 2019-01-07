@@ -44,7 +44,7 @@ public class JwtTokenUtils {
         Date expiration = new Date(nowMillis + EXPIRATION * 1000);
         //加盐
         SecretKey secretKey = generalKey();
-        String id = payload.get("openid").toString();
+        String id = payload.get("phone").toString();
         String subject = payload.get("subject").toString();
         JwtBuilder builder = Jwts.builder()
             .setClaims(payload)

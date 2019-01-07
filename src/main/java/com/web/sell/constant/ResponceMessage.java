@@ -11,4 +11,6 @@ public class ResponceMessage {
 
     public final static String RECORD_IS_NULL = "未获取记录";
 
+    public final static String LOGIN_ERROR = "用户名或密码错误";
+
 }

@@ -1,29 +1,20 @@
 package com.web.sell.req;
 
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Data
 public class UserReg {
 
-    private long gid;
-
-    @NotEmpty(message = "用户名不能为空")
-    private String name;
-
-    private String password;
-
     @NotEmpty(message = "手机号不能为空")
+    @ApiModelProperty(value = "手机号")
     private String phone;
 
-    private Integer sex;
-
-    private String openId;
-
-    private String icon;
+    @NotEmpty(message = "密码不能为空")
+    @ApiModelProperty(value = "密码")
+    private String password;
 
 }
