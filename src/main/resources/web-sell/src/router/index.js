@@ -4,10 +4,14 @@ import goods from 'components/goods/goods';
 import ratings from 'components/ratings/ratings';
 import seller from 'components/seller/seller';
 import order from 'components/order/order';
+import login from 'components/login/login';
 
 Vue.use(Router);
 
 const routes = [{
+    path: '/login',
+    component: login
+}, {
     path: '/',
     redirect: '/goods'
 }, {

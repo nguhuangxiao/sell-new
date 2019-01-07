@@ -10,7 +10,6 @@ import java.util.Date;
 @Data
 public class UserReg {
 
-    @NotNull
     private long gid;
 
     @NotEmpty(message = "用户名不能为空")
@@ -23,8 +22,8 @@ public class UserReg {
 
     private Integer sex;
 
-    private Date createTime;
+    private String openId;
 
-    private Date updateTime;
+    private String icon;
 
 }

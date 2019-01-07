@@ -9,14 +9,16 @@
         <result column="sex" property="sex" jdbcType="TINYINT"/>
         <result column="open_id" property="sex" jdbcType="VARCHAR"/>
         <result column="icon" property="sex" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Base_Column_List">
-        gid, name, password, phone, sex, open_id, icon
+        gid, name, password, phone, sex, open_id, icon, create_time
     </sql>
 
     <select id="findUserByPhone" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from tb_user
+        WHERE phone = #{phone, jdbcType=STRING}
     </select>
 </mapper>

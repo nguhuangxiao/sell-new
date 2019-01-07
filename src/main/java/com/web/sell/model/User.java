@@ -17,8 +17,10 @@ public class User {
 
     private Integer sex;
 
-    private Date createTime;
+    private String openId;
 
-    private Date updateTime;
+    private String icon;
+
+    private Date createTime;
 
 }

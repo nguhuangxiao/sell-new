@@ -32,8 +32,6 @@ public class WebSecurityConfig implements WebMvcConfigurer {
      */
     public final static String GLOBAL_USER_INFO = "user_info";
 
-    public final static String WEB_USER_INFO = "web_user_info";
-
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
     @Bean
@@ -42,26 +40,27 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     }
 
     public void addInterceptors(InterceptorRegistry registry) {
+
+        System.out.println("11111");
+
         InterceptorRegistration addInterceptor = registry.addInterceptor(getSecurityInterceptor());
 
-        addInterceptor.excludePathPatterns("/**");
+        //addInterceptor.excludePathPatterns("/**");
 
         // 拦截配置
-        //addInterceptor.addPathPatterns("/**");
+        addInterceptor.addPathPatterns("/**");
     }
 
     private class SecurityInterceptor extends HandlerInterceptorAdapter {
-
         @Override
-        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
-            Object requestObj = request.getAttribute(GLOBAL_USER_INFO);
-            Object userObj = request.getSession().getAttribute(WEB_USER_INFO);
-            if(requestObj!=null||userObj!=null){
+        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+            //获取session
+            Object userObj = request.getSession().getAttribute(GLOBAL_USER_INFO);
+            if(userObj != null){
                 return true;
             }
             Map<String,Object> result = new HashMap<>();
-            result.put("status","jump");
+            result.put("status", -1);
             result.put("message","to login");
             responseOutWithJson(response,result);
             return false;
