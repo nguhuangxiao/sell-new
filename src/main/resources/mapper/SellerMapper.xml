@@ -20,7 +20,7 @@
     packing_price, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_seller
     where gid = #{gid,jdbcType=BIGINT}
@@ -33,13 +33,13 @@
     <selectKey resultType="java.lang.Long" keyProperty="gid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into tb_seller (name, icon, notice, 
-      description, delivery_time, sell_score, 
-      min_price, delivery_price, packing_price, 
+    insert into tb_seller (name, icon, notice,
+      description, delivery_time, sell_score,
+      min_price, delivery_price, packing_price,
       create_time, update_time)
-    values (#{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{deliveryTime,jdbcType=INTEGER}, #{sellScore,jdbcType=DECIMAL}, 
-      #{minPrice,jdbcType=DECIMAL}, #{deliveryPrice,jdbcType=DECIMAL}, #{packingPrice,jdbcType=DECIMAL}, 
+    values (#{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR}, #{deliveryTime,jdbcType=INTEGER}, #{sellScore,jdbcType=DECIMAL},
+      #{minPrice,jdbcType=DECIMAL}, #{deliveryPrice,jdbcType=DECIMAL}, #{packingPrice,jdbcType=DECIMAL},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.web.sell.model.Seller" >
@@ -172,4 +172,9 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where gid = #{gid,jdbcType=BIGINT}
   </update>
+    <select id="listByPage" parameterType="com.web.sell.req.SellerReq" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_seller
+    </select>
 </mapper>

@@ -1,6 +1,9 @@
 package com.web.sell.mapper;
 
 import com.web.sell.model.Seller;
+import com.web.sell.req.SellerReq;
+
+import java.util.List;
 
 public interface SellerMapper {
 
@@ -15,4 +18,6 @@ public interface SellerMapper {
     int updateByPrimaryKeySelective(Seller record);
 
     int updateByPrimaryKey(Seller record);
+
+    List<Seller> listByPage(SellerReq sellerReq);
 }

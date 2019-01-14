@@ -8,10 +8,9 @@ import javax.validation.constraints.NotNull;
 
 @ApiModel
 @Data
-public class SellerReq {
+public class SellerReq extends BaseReg{
 
     @ApiModelProperty(value = "商户id", required = true)
-    @NotNull
     private Long id;
 
 }
