@@ -7,7 +7,7 @@
         <result column="expires_in" property="expiresIn" jdbcType="INTEGER"/>
         <result column="app_id" property="appId" jdbcType="VARCHAR"/>
         <result column="app_secret" property="appSecret" jdbcType="VARCHAR"/>
-        <result column="create_time" property="createTime" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Base_Column_List">
         gid, token, expires_in, app_id, app_secret, create_time
@@ -17,9 +17,10 @@
         <selectKey resultType="java.lang.Long" keyProperty="gid" order="AFTER" >
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into tb_wx_token (token, expires_in, app_id, app_secret, create_time)
-        value (#{token, jdbcType=VARCHAR}, #{expires_in, jdbcType=INTEGER}, #{app_id, jdbcType=VARCHAR},
-            #{app_secret, jdbcType=VARCHAR}, #{create_time, jdbcType=INTEGER}
+        insert into tb_wx_token
+        (token, expires_in, app_id, app_secret, create_time)
+        value (#{token, jdbcType=VARCHAR}, #{expiresIn, jdbcType=INTEGER}, #{appId, jdbcType=VARCHAR},
+            #{appSecret, jdbcType=VARCHAR}, #{createTime, jdbcType=TIMESTAMP}
         )
     </insert>
 

@@ -1,5 +1,6 @@
 package com.web.sell.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.web.sell.mapper.WxAccessTokenMapper;
 import com.web.sell.model.WxAccessToken;
 import com.web.sell.property.WxProp;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
+
 
 @Service
 public class WxApiServiceImpl implements WxApiService {
@@ -30,37 +32,44 @@ public class WxApiServiceImpl implements WxApiService {
      * 获取token信息
      * @return
      */
-    public Boolean updateAccessToken(WxAccessToken list) {
-        long currentTime = System.currentTimeMillis() / 1000;
+    public Boolean testAccessToken(WxAccessToken list) {
+        /*long currentTime = System.currentTimeMillis() / 1000;
         int tokenTime = list.getCreateTime() + 7200;
         if(currentTime < tokenTime) {
             return true;
         }else{
             return false;
-        }
+        }*/
+        return false;
     }
 
     @Override
-    public WxAccessToken updateAccessToken() {
+    public String updateAccessToken() {
+        //最新的access_token
         WxAccessToken list = wxAccessTokenMapper.findLatest();
         if(list != null) {
             //验证access_token
-            if(updateAccessToken(list)) {
-
+            if(testAccessToken(list)) {
+                return list.getToken();
             }
-        }else{
-            String url = String.format(
-                WX_API_ACCESS_TOKEN,
-                wxProp.getAppId(),
-                wxProp.getAppSecret()
-            );
-            String resultStr = restTemplate.getForObject(url, String.class);
-
-
-
-            System.out.print(resultStr);
         }
-        return null;
+        System.out.println("test");
+        String url = String.format(
+            WX_API_ACCESS_TOKEN,
+            wxProp.getAppId(),
+            wxProp.getAppSecret()
+        );
+        String resultStr = restTemplate.getForObject(url, String.class);
+        JSONObject rtnObj = JSONObject.parseObject(resultStr);
+        WxAccessToken wxAccessToken = new WxAccessToken();
+
+        wxAccessToken.setToken(rtnObj.getString("access_token"));
+        wxAccessToken.setExpiresIn(rtnObj.getInteger("expires_in"));
+        wxAccessToken.setAppId(wxProp.getAppId());
+        wxAccessToken.setAppSecret(wxProp.getAppSecret());
+        wxAccessToken.setCreateTime(new Date());
+
+        return wxAccessToken.getToken();
     }
 
     @Override

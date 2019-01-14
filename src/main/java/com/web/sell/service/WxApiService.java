@@ -5,7 +5,7 @@ import com.web.sell.model.WxAccessToken;
 
 public interface WxApiService {
 
-    WxAccessToken updateAccessToken();
+    String updateAccessToken();
 
     /** 模版消息 **/
     void getTemplateMessage(String openId);

@@ -2,6 +2,8 @@ package com.web.sell.model;
 
 import lombok.Data;
 
+import java.util.Date;
+
 
 @Data
 public class WxAccessToken {
@@ -16,6 +18,6 @@ public class WxAccessToken {
 
     private int expiresIn;
 
-    private int createTime;
+    private Date createTime;
 
 }
