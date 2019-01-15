@@ -1,8 +1,7 @@
 package com.web.sell.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.web.sell.dto.WxResDto;
-import com.web.sell.service.WxApiService;
+import com.web.sell.service.WxDialogueService;
 import com.web.sell.util.CheckUtil;
 import com.web.sell.util.Res;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class WxDialogueController {
 
     @Autowired
-    private WxApiService wxApiService;
+    private WxDialogueService wxApiService;
 
     /**
      * 微信测试号-服务器接口验证
@@ -62,6 +61,16 @@ public class WxDialogueController {
     @RequestMapping(value = "/templateMessage", method = RequestMethod.GET)
     public WxResDto templateMessage() {
         WxResDto res = wxApiService.getTemplateMessage();
+        return res;
+    }
+
+    /**
+     * 创建菜单
+     * @return
+     */
+    @RequestMapping(value = "/createMenu", method = RequestMethod.GET)
+    public WxResDto createMenu() {
+        WxResDto res = wxApiService.createMenu();
         return res;
     }
 }

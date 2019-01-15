@@ -1,12 +1,12 @@
 package com.web.sell.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.web.sell.dto.WxResDto;
 import com.web.sell.mapper.WxAccessTokenMapper;
 import com.web.sell.model.WxAccessToken;
 import com.web.sell.property.WxProp;
-import com.web.sell.service.WxApiService;
-import com.web.sell.util.TimeUtil;
+import com.web.sell.service.WxDialogueService;
 import com.web.sell.util.WxRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.Date;
 
 
 @Service
-public class WxApiServiceImpl implements WxApiService {
+public class WxDialogueServiceImpl implements WxDialogueService {
 
     @Autowired
     private RestTemplate restTemplate;
@@ -30,6 +30,13 @@ public class WxApiServiceImpl implements WxApiService {
     private final static String WX_API_ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
     private final static String  WX_API_TEMPLATE_MESSAGE = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
+
+    private final static String WX_API_CREATE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
+
+    @Override
+    public WxAccessToken findLatest() {
+        return wxAccessTokenMapper.findLatest();
+    }
 
     /**
      * 获取token信息
@@ -83,13 +90,13 @@ public class WxApiServiceImpl implements WxApiService {
         String url = WX_API_TEMPLATE_MESSAGE + token;
 
         JSONObject obj = new JSONObject();
-        obj.put("touser", "ofYhr1D7H7UEYHTEqhpqvndXM4Ro");
+        obj.put("touser", "ofYhr1HwyrE43O7GcQkENe16QSyY");
         obj.put("template_id", "Qy0aSdwVGCm2yGUxUYFwokZV6_47iEfCVNZEAJf6KKE");
         obj.put("topcolor", "#FF0000");
         JSONObject data = new JSONObject();
 
         JSONObject userData = new JSONObject();
-        userData.put("value", "尊敬的黄潇用户");
+        userData.put("value", "尊敬的用户");
         userData.put("color", "#173177");
 
         JSONObject keyword1Data = new JSONObject();
@@ -105,7 +112,7 @@ public class WxApiServiceImpl implements WxApiService {
         keyword3Data.put("color", "#173177");
 
         JSONObject keyword4Data = new JSONObject();
-        keyword4Data.put("value", "货物已到达北京网点，待派活");
+        keyword4Data.put("value", "货物已到达北京网点，待派件");
         keyword4Data.put("color", "#173177");
 
         JSONObject remarkData = new JSONObject();
@@ -127,7 +134,56 @@ public class WxApiServiceImpl implements WxApiService {
     }
 
     @Override
-    public WxAccessToken findLatest() {
-        return wxAccessTokenMapper.findLatest();
+    public WxResDto createMenu() {
+        String token = updateAccessToken();
+        String url = WX_API_CREATE_MENU + token;
+
+        JSONObject obj = new JSONObject();
+
+        JSONArray arr = new JSONArray();
+        //一级菜单
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", "今日歌曲");
+        jsonObject.put("type", "click");
+        jsonObject.put("key", "123456");
+
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("name", "菜单");
+
+        //二级菜单
+        JSONObject twolevelObj1 = new JSONObject();
+        twolevelObj1.put("type", "view");
+        twolevelObj1.put("name", "搜索");
+        twolevelObj1.put("url", "http://www.soso.com/");
+
+        JSONObject twolevelObj2 = new JSONObject();
+        twolevelObj2.put("type", "miniprogram");
+        twolevelObj2.put("name", "丰实跟单");
+        twolevelObj2.put("url", "http://mp.weixin.qq.com");
+        twolevelObj2.put("appid", "wxfbfbd2bc5978b601");
+        twolevelObj2.put("pagepath", "pages/project/list");
+
+        JSONObject twolevelObj3 = new JSONObject();
+        twolevelObj3.put("type", "click");
+        twolevelObj3.put("name", "赞一下我们");
+        twolevelObj3.put("key", "V1001_GOOD");
+
+        JSONArray twolevelMenu = new JSONArray();
+        twolevelMenu.add(twolevelObj1);
+        twolevelMenu.add(twolevelObj2);
+        twolevelMenu.add(twolevelObj3);
+
+        jsonObject1.put("sub_button", twolevelMenu);
+
+        arr.add(jsonObject);
+        arr.add(jsonObject1);
+
+        obj.put("button", arr);
+
+        String resultStr = restTemplate.postForObject(url, obj, String.class);
+        //处理返回结果
+        WxResDto wxResDto = WxRes.cb(resultStr);
+        return wxResDto;
+
     }
 }
