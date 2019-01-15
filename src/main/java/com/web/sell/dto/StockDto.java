@@ -7,6 +7,6 @@ public class StockDto {
 
     private Long id;
 
-    private Integer Stock;
+    private Integer stock;
 
 }

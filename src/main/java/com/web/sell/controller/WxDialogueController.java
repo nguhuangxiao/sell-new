@@ -1,5 +1,7 @@
 package com.web.sell.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.web.sell.dto.WxResDto;
 import com.web.sell.service.WxApiService;
 import com.web.sell.util.CheckUtil;
 import com.web.sell.util.Res;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/wx")
-public class WxApiController {
+public class WxDialogueController {
 
     @Autowired
     private WxApiService wxApiService;
@@ -53,10 +55,13 @@ public class WxApiController {
         return null;
     }
 
+    /**
+     * 模板消息
+     * @return
+     */
     @RequestMapping(value = "/templateMessage", method = RequestMethod.GET)
-    public Res<?> templateMessage(@RequestParam String openId) {
-        //wxApiService.getAccessToken();
-        //wxApiService.getTemplateMessage(openId);
-        return null;
+    public WxResDto templateMessage() {
+        WxResDto res = wxApiService.getTemplateMessage();
+        return res;
     }
 }
