@@ -10,7 +10,10 @@ import javax.validation.constraints.NotNull;
 @Data
 public class SellerReq extends BaseReg{
 
-    @ApiModelProperty(value = "商户id", required = true)
+    @ApiModelProperty(value = "商户id")
     private Long id;
+
+    @ApiModelProperty(value = "关键字")
+    private String keyWord;
 
 }

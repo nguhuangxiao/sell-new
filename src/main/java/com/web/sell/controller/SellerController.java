@@ -29,10 +29,10 @@ public class SellerController {
     }
 
     @ApiOperation(value = "卖家列表")
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
-    public Res<?> list(@RequestBody SellerReq sellerReq) {
-        PageHelper.startPage(sellerReq.getPageNo(), sellerReq.getPageSize());
-        List<Seller> list = sellerService.listByPage(sellerReq);
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public Res<?> list(SellerReq req) {
+        PageHelper.startPage(req.getPageNo(), req.getPageSize());
+        List<Seller> list = sellerService.listByPage(req);
         PageInfo<Seller> pageInfo = new PageInfo<>(list);
         return Res.buildOk(pageInfo);
     }
