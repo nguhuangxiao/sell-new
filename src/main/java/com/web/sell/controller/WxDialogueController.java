@@ -5,11 +5,12 @@ import com.web.sell.service.WxDialogueService;
 import com.web.sell.util.CheckUtil;
 import com.web.sell.util.Res;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -72,5 +73,20 @@ public class WxDialogueController {
     public WxResDto createMenu() {
         WxResDto res = wxApiService.createMenu();
         return res;
+    }
+
+    /**
+     * module=>素材管理
+     * 创建永久素材
+     * @return
+     */
+    @RequestMapping(value = "addMaterial", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
+    public void addMaterial(MultipartFile file) {
+        wxApiService.addMaterial(file);
+    }
+
+    @RequestMapping(value = "addNews", method = RequestMethod.GET)
+    public void addNews() {
+        wxApiService.addNews();
     }
 }

@@ -3,6 +3,7 @@ package com.web.sell.service;
 
 import com.web.sell.dto.WxResDto;
 import com.web.sell.model.WxAccessToken;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface WxDialogueService {
 
@@ -16,5 +17,11 @@ public interface WxDialogueService {
 
     /** 菜单创建 **/
     WxResDto createMenu();
+
+    /** 新增永久素材=> image、voice、video、thumb **/
+    void addMaterial(MultipartFile file);
+
+    /** 新增永久图文素材 **/
+    void addNews();
 
 }

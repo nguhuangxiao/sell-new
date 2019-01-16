@@ -9,9 +9,14 @@ import com.web.sell.property.WxProp;
 import com.web.sell.service.WxDialogueService;
 import com.web.sell.util.WxRes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.Date;
 
 
@@ -32,6 +37,10 @@ public class WxDialogueServiceImpl implements WxDialogueService {
     private final static String  WX_API_TEMPLATE_MESSAGE = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
 
     private final static String WX_API_CREATE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
+
+    private final static String WX_API_ADD_MATERIAL = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=%s&type=%s";
+
+    private final static String WX_API_ADD_NEWS = "https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=";
 
     @Override
     public WxAccessToken findLatest() {
@@ -145,7 +154,7 @@ public class WxDialogueServiceImpl implements WxDialogueService {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", "今日歌曲");
         jsonObject.put("type", "click");
-        jsonObject.put("key", "123456");
+        jsonObject.put("key", "JQiI99_2OvMmv9jbJ-Go8B6gtXRPnSzvyLVz4k40jGE");
 
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("name", "菜单");
@@ -184,6 +193,48 @@ public class WxDialogueServiceImpl implements WxDialogueService {
         //处理返回结果
         WxResDto wxResDto = WxRes.cb(resultStr);
         return wxResDto;
+
+    }
+
+    @Override
+    public void addMaterial(MultipartFile file) {
+        String token = updateAccessToken();
+        String url = String.format(
+            WX_API_ADD_MATERIAL,
+            token,
+            "thumb"
+        );
+        RestTemplate rest = new RestTemplate();
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        params.add("media", file.getResource());
+        params.add("name", "media");
+        params.add("filename", file.getName());
+        String resultStr = restTemplate.postForObject(url, params, String.class);
+        System.out.println(resultStr);
+    }
+
+    @Override
+    public void addNews() {
+        String token = updateAccessToken();
+        String url = WX_API_ADD_NEWS + token;
+
+        JSONObject params = new JSONObject();
+        JSONArray arr = new JSONArray();
+        JSONObject obj1 = new JSONObject();
+        obj1.put("title", "前端最该了解的十片文章");
+        obj1.put("thumb_media_id", "JQiI99_2OvMmv9jbJ-Go8PnNg-Rd-Oh8ygnrwcqagSc");
+        obj1.put("author", "huangxiao");
+        obj1.put("digest", "前端最该了解的十片文章");
+        obj1.put("show_cover_pic", 1);
+        obj1.put("content", "本次 Ethereum 君士坦丁堡升级是 Ethereum 由大都会转向宁静前的最后一次升级，升级采取的硬分叉模式，为了防止用户在升级时转账出现问题，我们决定暂时关闭 FOD 通道。由于在 2019 年 01 月 16 日凌晨，Ethereum 君士坦丁堡版本被曝出安全漏洞因此 FOD 通道重启只能延期，重启日期需要根据 Ethereum 基金会对这次安全漏洞对处理结果待定。");
+        obj1.put("content_source_url", "https://segmentfault.com/a/1190000017911885");
+        obj1.put("need_open_comment", 1);
+        obj1.put("only_fans_can_comment", 0);
+        arr.add(obj1);
+        params.put("articles", arr);
+
+        String resultStr = restTemplate.postForObject(url, params, String.class);
+        System.out.println(resultStr);
 
     }
 }
