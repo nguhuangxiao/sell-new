@@ -34,7 +34,7 @@ public class WxDialogueServiceImpl implements WxDialogueService {
 
     private final static String WX_API_ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
-    private final static String  WX_API_TEMPLATE_MESSAGE = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
+    private final static String WX_API_TEMPLATE_MESSAGE = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
 
     private final static String WX_API_CREATE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
 
